@@ -1,3 +1,5 @@
-function showMessage() {
-    alert("Hello! Welcome to my ApexPlanet Internship Project!");
+function welcome(){
+
+alert("🍔 Welcome to ByteBites!\nEnjoy your meal 😊");
+
 }
