@@ -22,9 +22,7 @@
 
 <section class="hero">
     <h2>Fresh Food, Fast Delivery</h2>
-
     <p>Delicious meals made with love.</p>
-
     <button onclick="welcome()">Explore Menu</button>
 </section>
 
@@ -32,30 +30,54 @@
 
 <h2>Our Popular Menu</h2>
 
+<input type="text"
+id="search"
+placeholder="🔍 Search your favourite food...">
+
+<div class="filter-buttons">
+
+<button onclick="filterMenu('all')">All</button>
+
+<button onclick="filterMenu('pizza')">Pizza</button>
+
+<button onclick="filterMenu('burger')">Burger</button>
+
+<button onclick="filterMenu('fries')">Fries</button>
+
+<button onclick="filterMenu('drink')">Drinks</button>
+
+</div>
+
+<p id="noResult">No food found 🍔</p>
+
 <div class="cards">
 
-<div class="card">
+<div class="card pizza">
 <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500">
 <h3>Pizza</h3>
 <p>₹299</p>
+<button>Order Now</button>
 </div>
 
-<div class="card">
+<div class="card burger">
 <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500">
 <h3>Burger</h3>
 <p>₹199</p>
+<button>Order Now</button>
 </div>
 
-<div class="card">
+<div class="card fries">
 <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500">
 <h3>French Fries</h3>
 <p>₹149</p>
+<button>Order Now</button>
 </div>
 
-<div class="card">
+<div class="card drink">
 <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=500">
 <h3>Cold Drink</h3>
 <p>₹99</p>
+<button>Order Now</button>
 </div>
 
 </div>
@@ -71,6 +93,8 @@
 <input type="email" placeholder="Your Email">
 
 <textarea placeholder="Message"></textarea>
+
+<br>
 
 <button>Send</button>
 
