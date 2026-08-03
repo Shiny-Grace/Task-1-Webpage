@@ -1,155 +1,184 @@
-function welcome(){
-alert("🍔 Welcome to ByteBites!\nEnjoy your meal 😊");
+// Welcome Message
+
+function welcome() {
+    alert("🍔 Welcome to ByteBites!\nEnjoy your meal 😊");
 }
 
-// SEARCH
+// ---------------- SEARCH ----------------
 
-const search=document.getElementById("search");
+const search = document.getElementById("search");
 
-search.addEventListener("keyup",function(){
+search.addEventListener("keyup", function () {
 
-let value=search.value.toLowerCase();
+    let value = search.value.toLowerCase();
 
-let cards=document.querySelectorAll(".card");
+    let cards = document.querySelectorAll(".card");
 
-let found=false;
+    let found = false;
 
-cards.forEach(function(card){
+    cards.forEach(function (card) {
 
-let food=card.innerText.toLowerCase();
+        let food = card.innerText.toLowerCase();
 
-if(food.includes(value)){
-card.style.display="block";
-found=true;
-}
-else{
-card.style.display="none";
-}
+        if (food.includes(value)) {
+
+            card.style.display = "block";
+            found = true;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+    document.getElementById("noResult").style.display =
+        found ? "none" : "block";
 
 });
 
-document.getElementById("noResult").style.display=found?"none":"block";
+// ---------------- FILTER ----------------
 
-});
+function filterMenu(category) {
 
-// FILTER
+    let cards = document.querySelectorAll(".card");
 
-function filterMenu(category){
+    cards.forEach(function (card) {
 
-let cards=document.querySelectorAll(".card");
+        if (category === "all") {
 
-cards.forEach(function(card){
+            card.style.display = "block";
 
-if(category=="all"){
+        }
 
-card.style.display="block";
+        else if (card.classList.contains(category)) {
 
-}
+            card.style.display = "block";
 
-else if(card.classList.contains(category)){
+        }
 
-card.style.display="block";
+        else {
 
-}
+            card.style.display = "none";
 
-else{
+        }
 
-card.style.display="none";
-
-}
-
-});
+    });
 
 }
 
-// SHOPPING CART
+// ---------------- SHOPPING CART ----------------
 
-let cart=[];
-
-function addToCart(name,price){
-
-cart.push({name,price});
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 updateCart();
 
-localStorage.setItem("cart",JSON.stringify(cart));
+function addToCart(name, price) {
+
+    cart.push({
+        name: name,
+        price: price
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCart();
+
+    alert(name + " added to cart 🛒");
 
 }
 
-function updateCart(){
+function updateCart() {
 
-let list=document.getElementById("cartItems");
+    let cartItems = document.getElementById("cartItems");
 
-list.innerHTML="";
+    cartItems.innerHTML = "";
 
-let total=0;
+    let total = 0;
 
-cart.forEach(function(item){
+    cart.forEach(function (item) {
 
-let li=document.createElement("li");
+        let li = document.createElement("li");
 
-li.innerHTML=item.name+" - ₹"+item.price;
+        li.innerHTML = item.name + " - ₹" + item.price;
 
-list.appendChild(li);
+        cartItems.appendChild(li);
 
-total+=item.price;
+        total += item.price;
 
-});
+    });
 
-document.getElementById("cartCount").innerHTML=cart.length;
+    document.getElementById("cartCount").innerHTML = cart.length;
 
-document.getElementById("total").innerHTML=total;
-
-}
-
-function clearCart(){
-
-cart=[];
-
-updateCart();
-
-localStorage.removeItem("cart");
+    document.getElementById("total").innerHTML = total;
 
 }
 
-// LOAD CART
+// ---------------- CLEAR CART ----------------
 
-if(localStorage.getItem("cart")){
+function clearCart() {
 
-cart=JSON.parse(localStorage.getItem("cart"));
+    if (confirm("Clear the shopping cart?")) {
 
-updateCart();
+        cart = [];
 
-}
+        localStorage.removeItem("cart");
 
-// FAVOURITES
+        updateCart();
 
-let hearts=document.querySelectorAll(".favourite");
-
-hearts.forEach(function(heart,index){
-
-if(localStorage.getItem("heart"+index)){
-
-heart.classList.add("active");
+    }
 
 }
 
-heart.addEventListener("click",function(){
+// ---------------- CHECKOUT ----------------
 
-heart.classList.toggle("active");
+function checkout() {
 
-if(heart.classList.contains("active")){
+    if (cart.length === 0) {
 
-localStorage.setItem("heart"+index,true);
+        alert("🛒 Your cart is empty!");
+
+        return;
+
+    }
+
+    alert("🎉 Order Successful!\n\nThank you for ordering from ByteBites ❤️");
+
+    cart = [];
+
+    localStorage.removeItem("cart");
+
+    updateCart();
 
 }
 
-else{
+// ---------------- FAVOURITES ----------------
 
-localStorage.removeItem("heart"+index);
+let hearts = document.querySelectorAll(".favourite");
 
-}
+hearts.forEach(function (heart, index) {
 
-});
+    if (localStorage.getItem("fav" + index)) {
+
+        heart.classList.add("active");
+
+    }
+
+    heart.addEventListener("click", function () {
+
+        heart.classList.toggle("active");
+
+        if (heart.classList.contains("active")) {
+
+            localStorage.setItem("fav" + index, "true");
+
+        } else {
+
+            localStorage.removeItem("fav" + index);
+
+        }
+
+    });
 
 });
